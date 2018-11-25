@@ -16,6 +16,7 @@ public class Person {
 	private String forename;
 	private String surname;
 	private Gender gender;
+	
 	@ManyToOne
 	private Adress adress;
 
@@ -27,6 +28,16 @@ public class Person {
 		this.adress = adress;
 	}
 
+	public Person(String forename, String surname, Gender gender, Adress adress) {
+		super();
+		this.forename = forename;
+		this.surname = surname;
+		this.gender = gender;
+		this.adress = adress;
+	}
+	
+	
+	
 	public long getId() {
 		return Id;
 	}
@@ -59,14 +70,13 @@ public class Person {
 		this.gender = gender;
 	}
 
-	public Person(String forename, String surname, Gender gender, Adress adress) {
+	public Person(String forename, String surname, Gender gender) {
 		super();
 		this.forename = forename;
 		this.surname = surname;
 		this.gender = gender;
-		this.adress = adress;
 	}
-
+	
 	public Person() {
 	}
 

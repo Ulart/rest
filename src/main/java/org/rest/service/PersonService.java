@@ -6,12 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.rest.model.Person;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class PersonService {
 
 	private SessionFactory sessionFactory;
@@ -27,6 +24,7 @@ public class PersonService {
 	public PersonService() {
 		/*ApplicationContext ctx = new ClassPathXmlApplicationContext("hibernate.xml");
 		sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");*/
+		
 	}
 	
 	
@@ -39,4 +37,37 @@ public class PersonService {
 		session.close();
 		return persons;
 	}
+	
+	public Person getPerson(long id) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Person person = session.get(Person.class, id);
+		session.getTransaction().commit();
+		session.close();
+		return person;
+	}
+	
+	public void addPerson(Person newPerson) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(newPerson.getAdress());
+		session.save(newPerson);
+		session.getTransaction().commit();
+		session.close();
+		return;
+	}
+	
+	public void deletePerson(long personId) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Person person = getPerson(personId);
+		session.delete(person.getAdress());
+		session.delete(person);
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return;
+	}
+	
 }

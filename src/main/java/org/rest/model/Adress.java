@@ -13,8 +13,6 @@ public class Adress {
 	@GeneratedValue
 	private long id;
 	private String country;
-	private String state;
-	private String zipcode;
 	private String street;
 	private String number;
 	
@@ -30,18 +28,6 @@ public class Adress {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	public String getZipcode() {
-		return zipcode;
-	}
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
 	public String getStreet() {
 		return street;
 	}
@@ -56,11 +42,9 @@ public class Adress {
 	}
 	
 	
-	public Adress(String country, String state, String zipcode, String street, String number) {
+	public Adress(String country, String street, String number) {
 		super();
 		this.country = country;
-		this.state = state;
-		this.zipcode = zipcode;
 		this.street = street;
 		this.number = number;
 	}
