@@ -23,8 +23,7 @@ public class PersonService {
 
 	public PersonService() {
 		/*ApplicationContext ctx = new ClassPathXmlApplicationContext("hibernate.xml");
-		sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");*/
-		
+		sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");*/		
 	}
 	
 	
@@ -47,14 +46,14 @@ public class PersonService {
 		return person;
 	}
 	
-	public void addPerson(Person newPerson) {
+	public Person addPerson(Person newPerson) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(newPerson.getAdress());
 		session.save(newPerson);
 		session.getTransaction().commit();
 		session.close();
-		return;
+		return newPerson;
 	}
 	
 	public void deletePerson(long personId) {
@@ -63,6 +62,17 @@ public class PersonService {
 		Person person = getPerson(personId);
 		session.delete(person.getAdress());
 		session.delete(person);
+		session.getTransaction().commit();
+		session.close();
+		return;
+	}
+	
+	public void updatePerson(Person person) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		session.update(person.getAdress());
+		session.update(person);
 		
 		session.getTransaction().commit();
 		session.close();
