@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.rest.model.Gender;
 import org.rest.model.Person;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,17 @@ public class PersonService {
 	public PersonService() {
 		/*ApplicationContext ctx = new ClassPathXmlApplicationContext("hibernate.xml");
 		sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");*/		
+	}
+	
+	public List<Person> getAllPersonsByForename(String forename, String surname, Gender gender){
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query<Person> query = session.createQuery("from Person where forename= :forename and surname= :surname and gender= :gender", Person.class);
+		query.setParameter("forename", forename);
+		List<Person> persons = query.getResultList();
+		session.getTransaction().commit();
+		session.close();
+		return persons;
 	}
 	
 	public List<Person> getAllPersons(){
