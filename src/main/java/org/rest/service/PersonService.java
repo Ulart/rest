@@ -26,7 +26,6 @@ public class PersonService {
 		sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");*/		
 	}
 	
-	
 	public List<Person> getAllPersons(){
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
