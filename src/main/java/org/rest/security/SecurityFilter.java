@@ -31,7 +31,6 @@ public class SecurityFilter implements ContainerRequestFilter {
 		this.sessionFactory = sessionFactory;
 	}
 
-	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER);
 		if (authHeader != null && authHeader.size() > 0) {

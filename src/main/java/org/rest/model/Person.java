@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.json.bind.annotation.JsonbTransient;
 
 @Entity
 @XmlRootElement
@@ -18,6 +20,8 @@ public class Person {
 	private Gender gender;
 	
 	@ManyToOne
+	@JsonbTransient
+	@XmlTransient
 	private Adress adress;
 
 	public Adress getAdress() {
@@ -35,8 +39,6 @@ public class Person {
 		this.gender = gender;
 		this.adress = adress;
 	}
-	
-	
 	
 	public long getId() {
 		return Id;
