@@ -76,7 +76,6 @@ public class PersonService {
 		
 		session.getTransaction().commit();
 		session.close();
-		
 		return;
 	}
 	

@@ -24,7 +24,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @Resource
 @Path("persons")
 @Consumes(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
-@Produces(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
+@Produces(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.TEXT_PLAIN})
 public class PersonResource {
 
 	PersonService personService =(PersonService) new ClassPathXmlApplicationContext("services.xml").getBean("personService");	
@@ -48,6 +48,11 @@ public class PersonResource {
 	@Path("/{personId}")
 	public Person getPerson(@PathParam("personId") long personId) {
 		return personService.getPerson(personId);
+	}
+	
+	@Path("/{personId}/adress")
+	public AdressResource getPersonAdress() {
+		return new AdressResource();
 	}
 	
 	@POST
