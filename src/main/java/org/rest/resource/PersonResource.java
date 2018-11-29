@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.rest.model.Link;
 import org.rest.model.Person;
 import org.rest.service.PersonService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -46,8 +47,11 @@ public class PersonResource {
 	
 	@GET
 	@Path("/{personId}")
-	public Person getPerson(@PathParam("personId") long personId) {
-		return personService.getPerson(personId);
+	public Person getPerson(@PathParam("personId") long personId, @Context UriInfo uriInfo) {
+		Person person = personService.getPerson(personId);
+		person.getLinks().add(getUriForSelf(personId, uriInfo));
+		person.getLinks().add(getUriForAdress(personId, uriInfo));
+		return person;
 	}
 	
 	@Path("/{personId}/adress")
@@ -55,12 +59,17 @@ public class PersonResource {
 		return new AdressResource();
 	}
 	
-	@POST
+	/*@POST
 	public Response addPerson(Person person, @Context UriInfo uriInfo) {
 		Person newPerson = personService.addPerson(person);
 		String newId = String.valueOf(newPerson.getId());
 		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
 		return Response.created(uri).entity(newPerson).build();
+	}*/
+	
+	@POST
+	public Person addPerson(Person person, @Context UriInfo uriInfo) {
+		return personService.addPerson(person);
 	}
 	
 	@DELETE
@@ -74,5 +83,19 @@ public class PersonResource {
 	public void updatePerson(@PathParam("personId") long personId, Person person) {
 		person.setId(personId);
 		personService.updatePerson(person);
+	}
+	
+	private Link getUriForSelf(long id, UriInfo uriInfo) {
+		URI uri = uriInfo.getBaseUriBuilder().path(PersonResource.class).path(Long.toString(id)).build();
+		//Link link = Link.fromUri(uri).rel("self").build();
+		Link link = new Link(uri, "self");
+		return link;
+	}
+	
+	private Link getUriForAdress(long id, UriInfo uriInfo) {
+		URI uri = uriInfo.getBaseUriBuilder().path(PersonResource.class).path(Long.toString(id)).path("adress").build();
+		//Link link = Link.fromUri(uri).rel("adress").build();
+		Link link = new Link(uri, "adress");
+		return link;
 	}
 }
