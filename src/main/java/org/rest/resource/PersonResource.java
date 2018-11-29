@@ -59,17 +59,12 @@ public class PersonResource {
 		return new AdressResource();
 	}
 	
-	/*@POST
+	@POST
 	public Response addPerson(Person person, @Context UriInfo uriInfo) {
 		Person newPerson = personService.addPerson(person);
 		String newId = String.valueOf(newPerson.getId());
 		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
 		return Response.created(uri).entity(newPerson).build();
-	}*/
-	
-	@POST
-	public Person addPerson(Person person, @Context UriInfo uriInfo) {
-		return personService.addPerson(person);
 	}
 	
 	@DELETE
