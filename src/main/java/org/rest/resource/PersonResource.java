@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.rest.model.Person;
+import org.rest.resource.beans.PersonFilterBean;
 import org.rest.service.PersonService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -38,9 +40,32 @@ public class PersonResource {
 	public void setPersonService(PersonService personService) {
 		this.personService = personService;
 	}*/
-
+	
+	/*@GET
+	public List<Person> getAllPersons(@QueryParam("forename") String forename, @QueryParam("surname") String surname) {
+		if(forename!=null && !forename.isEmpty()) {
+			if(surname!=null && !forename.isEmpty())
+				return personService.getAllPersonsByForenameAndSurname(forename, surname);
+			return personService.getAllPersonsByForename(forename);
+		}
+		if(surname!=null&& !surname.isEmpty())
+			return personService.getAllPersonsBySurname(surname);
+		
+		return personService.getAllPersons();
+	}*/
+	
 	@GET
-	public List<Person> getAllPersons() {
+	public List<Person> getAllPersons(@BeanParam PersonFilterBean filterBean) {
+		String forename = filterBean.getForename();
+		String surname = filterBean.getSurname();
+		if(forename!=null && !forename.isEmpty()) {
+			if(surname!=null && !forename.isEmpty())
+				return personService.getAllPersonsByForenameAndSurname(forename, surname);
+			return personService.getAllPersonsByForename(forename);
+		}
+		if(surname!=null&& !surname.isEmpty())
+			return personService.getAllPersonsBySurname(surname);
+		
 		return personService.getAllPersons();
 	}
 	
