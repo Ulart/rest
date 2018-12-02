@@ -2,11 +2,8 @@ package org.rest.model;
 
 import java.net.URI;
 
-import javax.persistence.Column;
-
 public class Link {
 
-	@Column(name="URI")
 	private URI uri;
 	private String rel;
 	public URI getUri() {

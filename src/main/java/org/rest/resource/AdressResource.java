@@ -12,7 +12,7 @@ import org.rest.service.AdressService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @Path("/")
-@Produces(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.TEXT_PLAIN})
+@Produces(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
 @Consumes(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
 public class AdressResource {
 

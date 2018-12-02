@@ -22,6 +22,7 @@ public class Person {
 	private String forename;
 	private String surname;
 	private Gender gender;
+	
 	@Transient
 	private List<Link> links= new ArrayList<Link>();
 	
@@ -34,10 +35,10 @@ public class Person {
 	}
 
 	@ManyToOne
-	@JsonbTransient
-	@XmlTransient
 	private Adress adress;
 
+	@JsonbTransient
+	@XmlTransient
 	public Adress getAdress() {
 		return adress;
 	}

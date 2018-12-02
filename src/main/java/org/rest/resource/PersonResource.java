@@ -25,7 +25,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @Resource
 @Path("persons")
 @Consumes(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
-@Produces(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.TEXT_PLAIN})
+@Produces(value= {MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
 public class PersonResource {
 
 	PersonService personService =(PersonService) new ClassPathXmlApplicationContext("services.xml").getBean("personService");	
