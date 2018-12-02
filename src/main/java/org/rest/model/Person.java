@@ -1,10 +1,16 @@
 package org.rest.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @XmlRootElement
@@ -17,9 +23,22 @@ public class Person {
 	private String surname;
 	private Gender gender;
 	
+	@Transient
+	private List<Link> links= new ArrayList<Link>();
+	
+	public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+
 	@ManyToOne
 	private Adress adress;
 
+	@JsonbTransient
+	@XmlTransient
 	public Adress getAdress() {
 		return adress;
 	}
@@ -35,8 +54,6 @@ public class Person {
 		this.gender = gender;
 		this.adress = adress;
 	}
-	
-	
 	
 	public long getId() {
 		return Id;

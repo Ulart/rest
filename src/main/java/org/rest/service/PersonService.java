@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.rest.model.Adress;
 import org.rest.model.Person;
 import org.springframework.stereotype.Service;
 
@@ -85,7 +86,9 @@ public class PersonService {
 	public Person addPerson(Person newPerson) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.save(newPerson.getAdress());
+		Adress adress = newPerson.getAdress();
+		if (adress != null)
+			session.save(adress);
 		session.save(newPerson);
 		session.getTransaction().commit();
 		session.close();
@@ -112,7 +115,6 @@ public class PersonService {
 
 		session.getTransaction().commit();
 		session.close();
-
 		return;
 	}
 

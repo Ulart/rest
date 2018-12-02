@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.rest.model.Link;
 import org.rest.model.Person;
 import org.rest.resource.beans.PersonFilterBean;
 import org.rest.service.PersonService;
@@ -71,8 +72,16 @@ public class PersonResource {
 	
 	@GET
 	@Path("/{personId}")
-	public Person getPerson(@PathParam("personId") long personId) {
-		return personService.getPerson(personId);
+	public Person getPerson(@PathParam("personId") long personId, @Context UriInfo uriInfo) {
+		Person person = personService.getPerson(personId);
+		person.getLinks().add(getUriForSelf(personId, uriInfo));
+		person.getLinks().add(getUriForAdress(personId, uriInfo));
+		return person;
+	}
+	
+	@Path("/{personId}/adress")
+	public AdressResource getPersonAdress() {
+		return new AdressResource();
 	}
 	
 	@POST
@@ -94,5 +103,17 @@ public class PersonResource {
 	public void updatePerson(@PathParam("personId") long personId, Person person) {
 		person.setId(personId);
 		personService.updatePerson(person);
+	}
+	
+	private Link getUriForSelf(long id, UriInfo uriInfo) {
+		URI uri = uriInfo.getBaseUriBuilder().path(PersonResource.class).path(Long.toString(id)).build();
+		Link link = new Link(uri, "self");
+		return link;
+	}
+	
+	private Link getUriForAdress(long id, UriInfo uriInfo) {
+		URI uri = uriInfo.getBaseUriBuilder().path(PersonResource.class).path(Long.toString(id)).path("adress").build();
+		Link link = new Link(uri, "adress");
+		return link;
 	}
 }

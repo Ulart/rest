@@ -41,7 +41,6 @@ public class Adress {
 		this.number = number;
 	}
 	
-	
 	public Adress(String country, String street, String number) {
 		super();
 		this.country = country;

@@ -8,7 +8,13 @@
 
 	<import resource="hibernate.xml" />
 
-	<bean id="personService" class="org.rest.service.PersonService" autowire="byType">
+	<bean id="personService" class="org.rest.service.PersonService"
+		autowire="byType">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="adressService" class="org.rest.service.AdressService"
+		autowire="byName">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
